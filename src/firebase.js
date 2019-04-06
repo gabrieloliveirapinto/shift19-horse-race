@@ -10,5 +10,3 @@ const app = initializeApp({
 })
 
 export const db = app.database()
-export const playersRef = db.ref('players')
-export const horsesRef = db.ref('horses')
