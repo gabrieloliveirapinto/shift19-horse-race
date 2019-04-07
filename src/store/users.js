@@ -21,15 +21,18 @@ export default {
     },
     setTotalPlayersReady(state, payload){
       state.totalPlayersReady = payload
+    },
+    addToScore(state, payload){
+      state.current.score += payload
     }
   },
   actions: {
     //get logged user
-    getLoggedUser({commit}, {key}){
-      commit('setCurrentKey', key)
-      db.ref('users').child(key).once("value").then(snap => {
+    getLoggedUser({commit}, {key, user_id}){
+      commit('setCurrentKey', user_id)
+      commit('setMyGameKey', key)
+      db.ref('users').child(user_id).once("value").then(snap => {
         commit('setCurrent', snap.val())
-        commit('setMyGameKey', snap.val().game_key)
       })
     },
     //add user to firebase
@@ -71,6 +74,8 @@ export default {
       console.log(`Joining game with key: ${key} and my user_id: ${user_id}`)
       db.ref('games').child(key).child('players').push({
         user_id: user_id,
+        answer: '',
+        score: 0
       }).then(() => {
         console.log("User added to race!")
       }).catch(error => {
@@ -106,6 +111,16 @@ export default {
         }
         commit('setTotalPlayersReady', totalReady)
       })
+    },
+    updateUserScore({commit}, {amount}){
+      console.log("Setting score")
+      commit('addToScore', amount)
+    },
+    setUserAnswer({dispatch}, {key, user_id, answer}){
+      db.ref('users').child(user_id).update({
+        answer: answer
+      })
+      dispatch('getLoggedUser', {key: key, user_id: user_id})
     }
   }
 }

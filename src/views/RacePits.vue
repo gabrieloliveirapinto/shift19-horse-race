@@ -54,7 +54,7 @@ export default {
     ...mapActions('users', ['getLoggedUser','setUserReady', 'checkPlayersReady']),
     ...mapActions('game', ['getGame', 'checkTotalPlayers', 'startGame']),
     init(){
-      this.getLoggedUser({key: this.$route.params.user})
+      this.getLoggedUser({key: this.$route.params.key, user_id: this.$route.params.user})
       this.getGame({key: this.$route.params.key})
       this.timer = setInterval(() => {
         console.log("Checking all ready")

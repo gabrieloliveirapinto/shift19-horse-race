@@ -6,10 +6,12 @@ export default {
   state: {
     current: null,
     totalPlayers: 0,
+    totalQuestions: 0,
     questions: [],
     currentQuestion: '',
     currentAnswers: [],
-    userAnswer: ''
+    userAnswer: '',
+    correct: '',
   },
   mutations: {
     setCurrent(state, payload){
@@ -20,12 +22,25 @@ export default {
     },
     setQuestions(state, payload){
       state.questions = payload
+      state.totalQuestions = payload.length
     },
     setCurrentQuestion(state, payload){
       state.currentQuestion = payload
     },
+    clearCurrentQuestion(state){
+      state.currentQuestion = ''
+    },
     setCurrentAnswers(state, payload){
       state.currentAnswers = payload.sort()
+    },
+    clearCurrentAnswers(state){
+      state.currentAnswers = []
+    },
+    setCorrect(state, payload){
+      state.correct = payload
+    },
+    setUserAnswer(state, payload){
+      state.userAnswer = payload
     }
   },
   actions: {
@@ -58,8 +73,13 @@ export default {
       commit('setCurrentQuestion', state.questions[number].question)
       commit('setCurrentAnswers', [...state.questions[number].incorrect_answers,state.questions[number].correct_answer])
     },
-    // setUserAnswer({commit}, {key, answer}){
-    //
-    // }
+    clearQuestion({commit}){
+      commit('clearCurrentQuestion')
+      commit('clearCurrentAnswers')
+    },
+    showCorrectAnswer({commit, state}, {number}){
+      console.log('setting correct answer...')
+      commit('setCorrect', state.questions[number].correct_answer)
+    },
   }
 }
