@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import players from './store/players.js'
+import users from './store/users.js'
 import horses from './store/horses.js'
 import game from './store/game.js'
 
@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    players,
+    users,
     horses,
     game
   },

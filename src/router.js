@@ -14,7 +14,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/ready/:key',
+      path: '/ready/:key/:user',
       name: 'race-pits',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

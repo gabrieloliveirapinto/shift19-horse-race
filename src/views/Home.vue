@@ -1,12 +1,21 @@
 <template>
   <div class="home">
-    <h1>Welcome to Peaky Blinders Grand Prix</h1>
-    <div class="" v-if=" this.totalPlayers < 4">
+    <h1>Peaky Blinders Grand Prix</h1>
+    <div v-if="!this.current">
       <input type="text" name="username" v-model="username" placeholder="Insert username">
-      <button @click="joinRace()">Join Race</button>
+      <input type="date" name="birth_date" v-model="birth_date">
+      <button @click="login()">Login</button>
     </div>
-    <div class="" v-else>
-      Race is full...
+    <div v-else>
+      <h2>Create Race</h2>
+      <label for="amount">Nº de Perguntas:</label>
+      <input type="number"  name="amount" v-model="amount">
+      <label for="level">Dificuldade:</label>
+      <input type="text"  name="levle" v-model="level">
+      <button type="button" name="button" @click="createRace()">Create</button>
+      <h2>Join Race</h2>
+      <input type="text"  name="race_id" v-model="race_id">
+      <button type="button" name="button" @click="joinRace()">Join</button>
     </div>
   </div>
 </template>
@@ -19,31 +28,35 @@ export default {
   data(){
     return {
       username: '',
+      birth_date: '',
+      race_id: '',
+      amount: 10,
+      level: ''
     }
   },
   computed: {
-    ...mapState('players', ['players', 'totalPlayers']),
-    ...mapState('horses', ['horses']),
-  },
-  created(){
-    this.init()
+    ...mapState('users', ['current', 'currentKey', 'myGameKey']),
   },
   methods: {
-    ...mapActions('players', ['getPlayers','setUser']),
-    ...mapActions('horses', ['getHorses']),
-    init(){
-      this.getPlayers()
-      this.getHorses()
+    ...mapActions('users', ['setUser', 'createGame', 'joinGame']),
+    login(){
+      this.setUser({
+        username: this.username,
+        birth_date: this.birth_date,
+      })
+    },
+    createRace(){
+      console.log("Creating race...")
+      this.createGame({
+        amount: this.amount,
+        level: this.level
+      })
     },
     joinRace(){
-      let randomIndex =  0
-      let horseNames = ['horse1', 'horse2', 'horse3', 'horse4']
-      while(this.horses[horseNames[randomIndex]].selected && randomIndex < 4){
-        randomIndex = randomIndex + 1
-      }
-      this.setUser({
-        horse: horseNames[randomIndex],
-        username: this.username
+      console.log(`Joining race with key: ${this.race_id}...`)
+      this.joinGame({
+        key: this.race_id,
+        user_id: this.currentKey
       })
     }
   }
