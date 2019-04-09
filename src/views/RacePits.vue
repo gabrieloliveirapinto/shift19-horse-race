@@ -74,3 +74,58 @@ export default {
   }
 }
 </script>
+
+<style lang="css" scoped>
+  .all_user {
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+    bottom: 0;
+    height: 20vh;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+  }
+
+  .user h3 {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .user img {
+    width: 3rem;
+    height: auto;
+    margin-right: -1rem;
+    z-index: 100;
+  }
+
+  .user:first-child img, .user:nth-child(4) img {
+    width: 5rem;
+    height: auto;
+  }
+
+  .user h3 {
+    background: #FF0F00;
+  }
+
+  button {
+    background: white;
+    padding: 2rem;
+    border: .5rem solid white;
+    border-radius: .5rem;
+    font-size: 5rem;
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: transparent;
+  }
+
+</style>
